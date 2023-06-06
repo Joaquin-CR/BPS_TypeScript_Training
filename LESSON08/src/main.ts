@@ -137,7 +137,6 @@ class StateObject<T> {
 const store = new StateObject("John");
 console.log(store.state);
 store.state = "Dave";
-//store.state = 12;
 
 const myState = new StateObject<(string | number | boolean)[]>([15]);
 myState.state = ['Dave', 42, true];
