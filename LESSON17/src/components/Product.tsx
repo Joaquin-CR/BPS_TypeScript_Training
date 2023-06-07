@@ -12,7 +12,7 @@ type PropsType = {
 const Product = ({ product, dispatch, REDUCER_ACTION, inCart }: PropsType): ReactElement => {
 
     const img: string = new URL(`../assets/images/${product.sku}.jpg`, import.meta.url).href;
-    console.log(img);
+
     const onAddToCart = () => dispatch({ type: REDUCER_ACTION.ADD, payload: { ...product, qty: 1 } });
 
     const itemInCart = inCart ? 'Item in cart' : null;

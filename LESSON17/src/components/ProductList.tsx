@@ -5,7 +5,7 @@ import Product from "./Product";
 
 
 const ProductList = () => {
-  const { dispatch, REDUCER_ACTION, cart } = useCart();
+  const { dispatch, REDUCER_ACTIONS, cart } = useCart();
   const { products } = useProducts();
 
   let pageContent: ReactElement | ReactElement[] = <p>Loading...</p>
@@ -15,7 +15,7 @@ const ProductList = () => {
       const inCart: boolean = cart.some(item => item.sku === product.sku);
       return (
         <Product key={product.sku} product={product} dispatch={dispatch}
-          REDUCER_ACTION={REDUCER_ACTION} inCart={inCart} />
+          REDUCER_ACTION={REDUCER_ACTIONS} inCart={inCart} />
       )
     })
   }
