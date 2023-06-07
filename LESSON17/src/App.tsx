@@ -12,7 +12,7 @@ function App() {
 
   const content = (
     <>
-      <Header viewCart={viewCart} setViewCArt={setViewCart}/>
+      <Header viewCart={viewCart} setViewCart={setViewCart}/>
       {pageContent}
       <Footer viewCart={viewCart}/>
     </>
