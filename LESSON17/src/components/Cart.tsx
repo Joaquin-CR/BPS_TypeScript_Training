@@ -17,7 +17,7 @@ const Cart = () => {
       {cart.map(item => {
         return (
           <CartLineItem key={item.sku} item={item} dispatch={dispatch}
-            REDUCER_ACTION={REDUCER_ACTIONS} />
+            REDUCER_ACTIONS={REDUCER_ACTIONS} />
         )
       })}
     </ul>

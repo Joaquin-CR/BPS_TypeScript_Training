@@ -1,13 +1,13 @@
-import React, { ChangeEvent, ReactElement } from 'react';
+import React, { ChangeEvent, ReactElement, memo } from 'react';
 import { CartItemType, ReducerAction, ReducerActionType } from '../context/CartProvider';
 
 type PropsType = {
     item: CartItemType,
     dispatch: React.Dispatch<ReducerAction>,
-    REDUCER_ACTION: ReducerActionType
+    REDUCER_ACTIONS: ReducerActionType
 }
 
-const CartLineItem = ({ item, dispatch, REDUCER_ACTION }: PropsType) => {
+const CartLineItem = ({ item, dispatch, REDUCER_ACTIONS }: PropsType) => {
 
     const img: string = new URL(`../assets/images/${item.sku}.jpg`, import.meta.url).href;
 
@@ -23,14 +23,14 @@ const CartLineItem = ({ item, dispatch, REDUCER_ACTION }: PropsType) => {
 
     const onChangeQty = (e: ChangeEvent<HTMLSelectElement>) => {
         dispatch({
-            type: REDUCER_ACTION.QUANTITY,
+            type: REDUCER_ACTIONS.QUANTITY,
             payload: { ...item, qty: Number(e.target.value) }
         });
     }
 
     const onRemoveFromCart = () => dispatch({
-        type: REDUCER_ACTION.REMOVE,
-        payload: item
+        type: REDUCER_ACTIONS.REMOVE,
+        payload: item,
     });
 
     const content = (
@@ -55,11 +55,13 @@ const CartLineItem = ({ item, dispatch, REDUCER_ACTION }: PropsType) => {
                 {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(lineTotal)}
             </div>
 
-            <button className="cart__button"
+            <button
+                className="cart__button"
                 aria-label="Remove Item From Cart"
                 title="Remove Item From Cart"
-                onClick={onRemoveFromCart}> 
-                X
+                onClick={onRemoveFromCart}
+            >
+                ❌
             </button>
         </li>
     )
@@ -67,4 +69,12 @@ const CartLineItem = ({ item, dispatch, REDUCER_ACTION }: PropsType) => {
     return content;
 }
 
-export default CartLineItem
+function areItemsEqual({ item: prevItem }: PropsType, { item: nextItem }: PropsType) {
+    return Object.keys(prevItem).every(key => {
+        return prevItem[key as keyof CartItemType] === nextItem[key as keyof CartItemType]
+    })
+}
+
+const MemoizedCartLineItem = memo<typeof CartLineItem>(CartLineItem, areItemsEqual)
+
+export default MemoizedCartLineItem
